@@ -96,5 +96,17 @@ resource "aws_ssm_parameter" "rabbitmq_sg_id" {
     Environment = var.environment
     Terraform   = "true"
   }
-  
 }
+
+resource "aws_ssm_parameter" "catalogue_sg_id" {
+  name        = "/${var.project}/${var.environment}/catalogue_sg_id"
+  type        = "String"
+  value       = module.catalogue.sg_id
+  description = "Catalogue Security Group ID for the ${var.project} project in ${var.environment} environment"
+  tags = {        
+    Project     = var.project
+    Environment = var.environment
+    Terraform   = "true"
+  }
+}
+
