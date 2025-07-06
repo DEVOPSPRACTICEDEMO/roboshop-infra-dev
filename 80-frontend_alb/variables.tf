@@ -1,14 +1,10 @@
 variable "project" {
-  description = "Project name for tagging"
-  default     = "roboshop"
-  
+    default = "roboshop"  
 }
 
 variable "environment" {
-  description = "Environment name for tagging"
-  default     = "dev"
-  
-}   
+    default = "dev"  
+}
 
 variable "zone_id" {
   description = "Route53 Hosted Zone ID"
