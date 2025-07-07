@@ -300,6 +300,15 @@ resource "aws_security_group_rule" "catalogue_vpn_ssh" {
   security_group_id = module.catalogue.sg_id
 }
 
+resource "aws_security_group_rule" "catalogue_bastion_ssh" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  source_security_group_id = module.bastion.sg_id
+  security_group_id = module.catalogue.sg_id
+}
+
 resource "aws_security_group_rule" "catalogue_vpn_http" {
   type              = "ingress"
   from_port         = 8080
@@ -328,6 +337,16 @@ resource "aws_security_group_rule" "user_vpn_ssh" {
   security_group_id = module.user.sg_id
 }
 
+resource "aws_security_group_rule" "user_bastion_ssh" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  source_security_group_id = module.bastion.sg_id
+  security_group_id = module.user.sg_id
+}
+
+
 resource "aws_security_group_rule" "user_vpn_http" {
   type              = "ingress"
   from_port         = 8080
@@ -353,6 +372,15 @@ resource "aws_security_group_rule" "cart_vpn_ssh" {
   to_port           = 22
   protocol          = "tcp"
   source_security_group_id = module.vpn.sg_id
+  security_group_id = module.cart.sg_id
+}
+
+resource "aws_security_group_rule" "cart_bastion_ssh" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  source_security_group_id = module.bastion.sg_id
   security_group_id = module.cart.sg_id
 }
 
@@ -384,6 +412,15 @@ resource "aws_security_group_rule" "shipping_vpn_ssh" {
   security_group_id = module.shipping.sg_id
 }
 
+resource "aws_security_group_rule" "shipping_bastion_ssh" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  source_security_group_id = module.bastion.sg_id
+  security_group_id = module.shipping.sg_id
+}
+
 resource "aws_security_group_rule" "shipping_vpn_http" {
   type              = "ingress"
   from_port         = 8080
@@ -412,6 +449,15 @@ resource "aws_security_group_rule" "payment_vpn_ssh" {
   security_group_id = module.payment.sg_id
 }
 
+resource "aws_security_group_rule" "payment_bastion_ssh" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  source_security_group_id = module.bastion.sg_id
+  security_group_id = module.payment.sg_id
+}
+
 resource "aws_security_group_rule" "payment_vpn_http" {
   type              = "ingress"
   from_port         = 8080
@@ -437,6 +483,15 @@ resource "aws_security_group_rule" "backend_alb_vpn" {
   to_port           = 80
   protocol          = "tcp"
   source_security_group_id = module.vpn.sg_id
+  security_group_id = module.backend_alb.sg_id
+}
+
+resource "aws_security_group_rule" "backend_alb_bastion" {
+  type              = "ingress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  source_security_group_id = module.bastion.sg_id
   security_group_id = module.backend_alb.sg_id
 }
 resource "aws_security_group_rule" "backend_alb_frontend" {
@@ -482,6 +537,15 @@ resource "aws_security_group_rule" "frontend_vpn" {
   to_port           = 22
   protocol          = "tcp"
   source_security_group_id = module.vpn.sg_id
+  security_group_id = module.frontend.sg_id
+}
+
+resource "aws_security_group_rule" "frontend_bastion" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  source_security_group_id = module.bastion.sg_id
   security_group_id = module.frontend.sg_id
 }
 
@@ -560,11 +624,11 @@ resource "aws_security_group_rule" "vpn_943" {
 }
 
 # backend ALB accepting connections from my bastion host on port no 80
-resource "aws_security_group_rule" "backend_alb_bastion" {
+/* resource "aws_security_group_rule" "backend_alb_bastion" {
   type              = "ingress"
   from_port         = 80
   to_port           = 80
   protocol          = "tcp"
   source_security_group_id = module.bastion.sg_id
   security_group_id = module.backend_alb.sg_id
-}
+} */
